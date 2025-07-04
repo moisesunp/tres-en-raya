@@ -22,7 +22,7 @@ Este proyecto implementa el juego tradicional de tres en raya donde dos jugadore
 
 1. Clona este repositorio:
 ```bash
-git clone https://github.com/tu-usuario/tres-en-raya.git
+git clone https://github.com/moisesunp/tres-en-raya.git
 ```
 
 2. Navega al directorio del proyecto:

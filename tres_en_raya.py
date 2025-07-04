@@ -6,6 +6,7 @@ Un juego clásico implementado en Python para dos jugadores.
 
 import os
 import sys
+import time
 
 class TresEnRaya:
     def __init__(self):
@@ -17,21 +18,25 @@ class TresEnRaya:
     
     def mostrar_tablero(self):
         """Muestra el tablero actual del juego."""
-        print("\n" + "="*15)
-        print("  TRES EN RAYA")
-        print("="*15)
-        print("\nTablero actual:")
-        print(f" {self.tablero[0]} | {self.tablero[1]} | {self.tablero[2]} ")
-        print("-----------")
-        print(f" {self.tablero[3]} | {self.tablero[4]} | {self.tablero[5]} ")
-        print("-----------")
-        print(f" {self.tablero[6]} | {self.tablero[7]} | {self.tablero[8]} ")
-        print("\nPosiciones:")
-        print(" 1 | 2 | 3 ")
-        print("-----------")
-        print(" 4 | 5 | 6 ")
-        print("-----------")
-        print(" 7 | 8 | 9 ")
+        print("\n" + "="*25)
+        print("      TRES EN RAYA")
+        print("="*25)
+        print("\n📋 Tablero actual:")
+        print("┌───┬───┬───┐")
+        print(f"│ {self.tablero[0] if self.tablero[0] != ' ' else '·'} │ {self.tablero[1] if self.tablero[1] != ' ' else '·'} │ {self.tablero[2] if self.tablero[2] != ' ' else '·'} │")
+        print("├───┼───┼───┤")
+        print(f"│ {self.tablero[3] if self.tablero[3] != ' ' else '·'} │ {self.tablero[4] if self.tablero[4] != ' ' else '·'} │ {self.tablero[5] if self.tablero[5] != ' ' else '·'} │")
+        print("├───┼───┼───┤")
+        print(f"│ {self.tablero[6] if self.tablero[6] != ' ' else '·'} │ {self.tablero[7] if self.tablero[7] != ' ' else '·'} │ {self.tablero[8] if self.tablero[8] != ' ' else '·'} │")
+        print("└───┴───┴───┘")
+        print("\n📍 Posiciones:")
+        print("┌───┬───┬───┐")
+        print("│ 1 │ 2 │ 3 │")
+        print("├───┼───┼───┤")
+        print("│ 4 │ 5 │ 6 │")
+        print("├───┼───┼───┤")
+        print("│ 7 │ 8 │ 9 │")
+        print("└───┴───┴───┘")
     
     def movimiento_valido(self, posicion):
         """Verifica si un movimiento es válido."""
@@ -72,8 +77,8 @@ class TresEnRaya:
         """Obtiene el movimiento del jugador actual."""
         while True:
             try:
-                print(f"\nTurno del jugador {self.jugador_actual}")
-                entrada = input("Elige una posición (1-9) o 'q' para salir: ")
+                print(f"\n🎮 Turno del jugador {self.jugador_actual}")
+                entrada = input("📍 Elige una posición (1-9) o 'q' para salir: ")
                 
                 if entrada.lower() == 'q':
                     return None
@@ -97,21 +102,30 @@ class TresEnRaya:
         """Limpia la pantalla de la consola."""
         os.system('cls' if os.name == 'nt' else 'clear')
     
+    def mostrar_movimiento_realizado(self, posicion):
+        """Muestra el movimiento que se acaba de realizar."""
+        print(f"\n✅ Jugador {self.jugador_actual} colocó su ficha en la posición {posicion + 1}")
+        time.sleep(1)  # Pausa breve para que se vea el movimiento
+    
     def jugar(self):
         """Método principal para ejecutar el juego."""
-        print("¡Bienvenido al juego de Tres en Raya!")
-        print("El jugador X siempre comienza.")
-        print("Ingresa 'q' en cualquier momento para salir del juego.")
+        self.limpiar_pantalla()
+        print("🎯 ¡Bienvenido al juego de Tres en Raya!")
+        print("👥 El jugador X siempre comienza.")
+        print("💡 Ingresa 'q' en cualquier momento para salir del juego.")
+        print("\n" + "="*40)
         
         while not self.juego_terminado:
             self.mostrar_tablero()
             
             movimiento = self.obtener_movimiento()
             if movimiento is None:
-                print("\n¡Gracias por jugar! 👋")
+                print("\n👋 ¡Gracias por jugar!")
                 return
             
             if self.hacer_movimiento(movimiento):
+                self.mostrar_movimiento_realizado(movimiento)
+                
                 if self.verificar_ganador():
                     self.limpiar_pantalla()
                     self.mostrar_tablero()
@@ -143,11 +157,11 @@ def main():
         if not juego.juego_terminado:
             break
         
-        print("\n¿Quieres jugar otra partida?")
-        respuesta = input("Ingresa 's' para sí o cualquier otra tecla para salir: ")
+        print("\n🔄 ¿Quieres jugar otra partida?")
+        respuesta = input("📝 Ingresa 's' para sí o cualquier otra tecla para salir: ")
         
         if respuesta.lower() != 's':
-            print("\n¡Gracias por jugar! 👋")
+            print("\n👋 ¡Gracias por jugar!")
             break
         
         juego.limpiar_pantalla()
@@ -157,5 +171,5 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n¡Juego interrumpido! 👋")
+        print("\n\n👋 ¡Juego interrumpido!")
         sys.exit(0)
